@@ -3,7 +3,6 @@ package br.com.fiap.postech.monitoraconsumo.repositorio;
 import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
 @Repository

@@ -1,6 +1,7 @@
 package br.com.fiap.postech.monitoraconsumo.controller;
 
 import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
+import br.com.fiap.postech.monitoraconsumo.form.EnderecoForm;
 import br.com.fiap.postech.monitoraconsumo.repositorio.EnderecoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +31,8 @@ public class EnderecoController {
     }
 
     @PostMapping
-    public ResponseEntity<Endereco> save(@RequestBody Endereco endereco) {
+    public ResponseEntity<Endereco> save(@RequestBody EnderecoForm enderecoForm) {
+        var endereco = enderecoForm.toEndereco();
         enderecoRepositorio.save(endereco);
         return ResponseEntity.status(HttpStatus.CREATED).body(endereco);
     }

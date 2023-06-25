@@ -34,4 +34,8 @@ public class EnderecoRepositorio {
     public Optional<Endereco> findById(Long id) {
         return enderecos.stream().filter(endereco -> endereco.getId().equals(id)).findFirst();
     }
+
+    public void delete(Long id) {
+        enderecos.removeIf(p -> p.getId().equals(id));
+    }
 }

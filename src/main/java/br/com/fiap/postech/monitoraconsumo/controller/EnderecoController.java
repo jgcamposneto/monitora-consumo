@@ -3,11 +3,8 @@ package br.com.fiap.postech.monitoraconsumo.controller;
 import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
 import br.com.fiap.postech.monitoraconsumo.form.EnderecoForm;
 import br.com.fiap.postech.monitoraconsumo.repositorio.EnderecoRepositorio;
-import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Path;
-import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -48,7 +44,8 @@ public class EnderecoController {
             return ResponseEntity.badRequest().body(violacoesToMap);
         var endereco = enderecoForm.toEndereco();
         enderecoRepositorio.save(endereco);
-        return ResponseEntity.status(HttpStatus.CREATED).body(endereco);
+        enderecoForm.setId(endereco.getId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoForm);
     }
 
     private <T> Map<Path, String> validar(T form) {
@@ -61,6 +58,19 @@ public class EnderecoController {
     public ResponseEntity delete(@PathVariable Long id) {
         enderecoRepositorio.delete(id);
         return ResponseEntity.ok("Delete com sucesso");
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody EnderecoForm enderecoForm) {
+        var violacoesToMap = validar(enderecoForm);
+        if(!violacoesToMap.isEmpty())
+            return ResponseEntity.badRequest().body(violacoesToMap);
+        var endereco =  enderecoForm.toEndereco();
+        endereco.setId(id);
+        var enderecoAdicionado = enderecoRepositorio.update(endereco);
+        if (!enderecoAdicionado.isEmpty())
+            enderecoForm.setId(id);
+        return ResponseEntity.ok(enderecoForm);
     }
 
 }

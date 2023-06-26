@@ -4,9 +4,15 @@ import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class EnderecoForm {
 
+    @JsonProperty
+    private Long id;
     @JsonProperty
     @NotBlank(message = "Rua é um campo obrigatório e não pode estar em branco.")
     private String rua;

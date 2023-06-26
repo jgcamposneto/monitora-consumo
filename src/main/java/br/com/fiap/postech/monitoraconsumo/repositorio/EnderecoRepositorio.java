@@ -38,4 +38,21 @@ public class EnderecoRepositorio {
     public void delete(Long id) {
         enderecos.removeIf(p -> p.getId().equals(id));
     }
+
+    public Optional<Endereco> update(Endereco enderecoAtualizacao) {
+        Optional<Endereco> enderecoASerBuscado = this.findById(enderecoAtualizacao.getId());
+
+        if(enderecoASerBuscado.isPresent()) {
+            Endereco endereco = enderecoASerBuscado.get();
+            endereco.setRua(enderecoAtualizacao.getRua());
+            endereco.setNumero(enderecoAtualizacao.getNumero());
+            endereco.setBairro(enderecoAtualizacao.getBairro());
+            endereco.setCidade(enderecoAtualizacao.getCidade());
+            endereco.setEstado(enderecoAtualizacao.getEstado());
+
+            return Optional.of(endereco);
+        }
+
+        return Optional.empty();
+    }
 }

@@ -10,18 +10,11 @@ public class EnderecoRepositorio {
 
     static private Set<Endereco> enderecos;
 
-    static {
-        enderecos = new HashSet<>();
-        Endereco endereco = new Endereco();
-        endereco.setRua("Rua 1").setNumero(1).setBairro("Bairro1").setCidade("Cidade1").setEstado("Estado1");
-        save(endereco);
-    }
-
     public EnderecoRepositorio() {
         enderecos = new HashSet<>();
     }
 
-    public static Endereco save(Endereco endereco){
+    public Endereco save(Endereco endereco){
         endereco.setId(enderecos.size() + 1L);
         enderecos.add(endereco);
         return endereco;

@@ -1,26 +1,29 @@
 package br.com.fiap.postech.monitoraconsumo.dominio;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 @EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor
+@Entity
+@Table(name="tb_endereco")
 public class Endereco {
 
-    private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String rua;
     private Integer numero;
     private String bairro;
     private String cidade;
     private String estado;
 
-    public Endereco setId(Long id) {
+    public Endereco setId(UUID id) {
         this.id = id;
         return this;
     }

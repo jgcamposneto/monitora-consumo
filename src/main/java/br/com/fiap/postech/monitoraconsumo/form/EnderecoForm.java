@@ -7,12 +7,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 public class EnderecoForm {
 
     @JsonProperty
-    private Long id;
+    private UUID id;
     @JsonProperty
     @NotBlank(message = "Rua é um campo obrigatório e não pode estar em branco.")
     private String rua;

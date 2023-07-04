@@ -1,4 +1,4 @@
-package br.com.fiap.postech.monitoraconsumo.repositorio;
+package br.com.fiap.postech.monitoraconsumo.repository;
 
 import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
 import org.springframework.data.jpa.repository.JpaRepository;

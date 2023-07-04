@@ -1,7 +1,7 @@
 package br.com.fiap.postech.monitoraconsumo.service;
 
 import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
-import br.com.fiap.postech.monitoraconsumo.repositorio.IEnderecoRepository;
+import br.com.fiap.postech.monitoraconsumo.repository.IEnderecoRepository;
 import br.com.fiap.postech.monitoraconsumo.service.exception.ControllerNotFoundException;
 import br.com.fiap.postech.monitoraconsumo.service.exception.DatabaseException;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,9 +21,9 @@ public class EnderecoService {
 
 
     public Collection<Endereco> findAll() {
-        var produtos = repository.findAll();
+        var enderecos = repository.findAll();
 
-        return produtos;
+        return enderecos;
     }
 
     public Endereco findById(UUID id) {
@@ -48,7 +48,7 @@ public class EnderecoService {
 
             return findEndereco;
         } catch (EntityNotFoundException e) {
-            throw  new ControllerNotFoundException("Produto não encontrado, id:" + id);
+            throw  new ControllerNotFoundException("Endereço não encontrado, id:" + id);
         }
     }
 

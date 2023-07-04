@@ -11,13 +11,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class PessoaForm {
 
     @JsonProperty
-    private Long id;
+    private UUID id;
     @JsonProperty
     @NotBlank(message = "Nome é um campo obrigatório e não pode estar em branco.")
     private String nome;

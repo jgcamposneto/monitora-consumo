@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
@@ -45,9 +44,10 @@ public class EnderecoController {
         if(!violacoesToMap.isEmpty())
             return ResponseEntity.badRequest().body(violacoesToMap);
         var endereco = enderecoForm.toEndereco();
-        Endereco enderecoSaved = enderecoService.save(endereco);
+        var enderecoSaved = enderecoService.save(endereco);
         enderecoForm.setId(enderecoSaved.getId());
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand((enderecoSaved.getId())).toUri();
+        var uri =
+                ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand((enderecoSaved.getId())).toUri();
         return ResponseEntity.created(uri).body(enderecoForm);
     }
 
@@ -73,6 +73,5 @@ public class EnderecoController {
         var violacoesToMap = violacoes.stream().collect(Collectors.toMap(ConstraintViolation::getPropertyPath, ConstraintViolation::getMessage));
         return violacoesToMap;
     }
-
 
 }

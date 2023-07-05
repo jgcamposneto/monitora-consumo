@@ -28,7 +28,7 @@ As urls dos endpoints disponíveis para acesso são as abaixo:
 ### Enderecos 
 * http://localhost:8080/enderecos
 
-As operaões possíveis são:
+As operações possíveis são:
 - `GET` - listar todos os endereços: http://localhost:8080/enderecos
 - `GET` - buscar por id: http://localhost:8080/enderecos/{id}
 - `POST` - cadastrar: http://localhost:8080/enderecos
@@ -62,7 +62,7 @@ Um exemplo de retorno será:
 
 * http://localhost:8080/pessoas
 
-As operaões possíveis são:
+As operações possíveis são:
 - `GET` - listar todos: http://localhost:8080/pessoas
 - `GET` - buscar por id: http://localhost:8080/pessoas/{id}
 - `POST` - cadastrar: http://localhost:8080/pessoas
@@ -94,7 +94,7 @@ Um exemplo de retorno será:
 
 * http://localhost:8080/eletrodomesticos
 
-As operaões possíveis são:
+As operações possíveis são:
 - `GET` - listar todos: http://localhost:8080/eletrodomesticos
 - `GET` - buscar por id: http://localhost:8080/eletrodomesticos/{id}
 - `POST` - cadastrar: http://localhost:8080/eletrodomesticos

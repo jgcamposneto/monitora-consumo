@@ -1,22 +1,45 @@
 package br.com.fiap.postech.monitoraconsumo.dominio;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
+@Getter
+@EqualsAndHashCode(of = {"id"})
+@NoArgsConstructor
+@Entity
+@Table(name = "tb_eletrodomestico")
 public class Eletrodomestico {
 
-    @JsonProperty
-    private Long id;
-
-    @JsonProperty
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String nome;
-
-    @JsonProperty
     private String modelo;
-
-    @JsonProperty
     private BigDecimal potencia;
 
+    public Eletrodomestico setId(UUID id) {
+        this.id = id;
+        return this;
+    }
 
+    public Eletrodomestico setNome(String nome) {
+        this.nome = nome;
+        return this;
+    }
+
+    public Eletrodomestico setModelo(String modelo) {
+        this.modelo = modelo;
+        return this;
+    }
+
+    public Eletrodomestico setPotencia(BigDecimal potencia) {
+        this.potencia = potencia;
+        return this;
+    }
 }

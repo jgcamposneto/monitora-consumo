@@ -4,13 +4,13 @@ import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 public class EnderecoForm {
 
     @JsonProperty

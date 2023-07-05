@@ -25,7 +25,8 @@ public class PessoaService {
     }
 
     public Pessoa findById(UUID id) {
-        var pessoa = repository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
+        var pessoa =
+                repository.findById(id).orElseThrow(() -> new ControllerNotFoundException("Pessoa não encontrada"));
         return pessoa;
     }
 

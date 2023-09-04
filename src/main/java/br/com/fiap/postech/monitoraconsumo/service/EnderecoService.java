@@ -17,7 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class EnderecoService {
@@ -93,11 +95,10 @@ public class EnderecoService {
         return endereco;
     }
 
-    public ResponseEntity<EnderecoForm> getEndereco(String rua, String bairro, String cidade) {
-        Endereco findEndereco = enderecoRepository.getEndereco(rua, bairro, cidade);
-        if (findEndereco == null) throw new ControllerNotFoundException("Endereco não encontrado");
-
-        EnderecoForm enderecoForm = new EnderecoForm(findEndereco);
-        return ResponseEntity.ok(enderecoForm);
+    public ResponseEntity<List<EnderecoForm>> getEnderecos(String rua, String bairro, String cidade) {
+        List<Endereco> findEnderecos = enderecoRepository.getEnderecos(rua, bairro, cidade);
+        if (findEnderecos == null) throw new ControllerNotFoundException("Nenhum endereco encontrado");
+        List<EnderecoForm> enderecosForm = findEnderecos.stream().map(EnderecoForm::new).collect(Collectors.toList());
+        return ResponseEntity.ok(enderecosForm);
     }
 }

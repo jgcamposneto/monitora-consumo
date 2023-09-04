@@ -1,7 +1,10 @@
 package br.com.fiap.postech.monitoraconsumo.controller;
 
 import br.com.fiap.postech.monitoraconsumo.dominio.Eletrodomestico;
+import br.com.fiap.postech.monitoraconsumo.dominio.Parentesco;
+import br.com.fiap.postech.monitoraconsumo.dominio.Sexo;
 import br.com.fiap.postech.monitoraconsumo.form.EletrodomesticoForm;
+import br.com.fiap.postech.monitoraconsumo.form.PessoaForm;
 import br.com.fiap.postech.monitoraconsumo.service.EletrodomesticoService;
 import br.com.fiap.postech.monitoraconsumo.service.UsuarioService;
 import jakarta.validation.ConstraintViolation;
@@ -12,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,6 +44,14 @@ public class EletrodomesticoController {
     public ResponseEntity<Eletrodomestico> findById(@PathVariable UUID id) {
         var eletrodomestico = eletrodomesticoService.findById(id);
         return ResponseEntity.ok(eletrodomestico);
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<List<EletrodomesticoForm>> findEletrodomesticos(@RequestParam(name = "nome",required=false) String nome,
+                                                                          @RequestParam(name = "modelo",required=false) String modelo,
+                                                                          @RequestParam(name = "potencia",required=false) BigDecimal potencia) {
+
+        return eletrodomesticoService.getEletrodomesticos(nome, modelo, potencia);
     }
 
     @PostMapping

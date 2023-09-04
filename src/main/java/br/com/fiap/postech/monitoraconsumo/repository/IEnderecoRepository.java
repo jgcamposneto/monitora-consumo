@@ -14,5 +14,5 @@ public interface IEnderecoRepository extends JpaRepository<Endereco, UUID> {
         FROM Endereco e
         WHERE e.rua = :rua OR e.bairro = :bairro OR e.cidade = :cidade
         """)
-    Endereco getEndereco(String rua, String bairro, String cidade);
+    List<Endereco> getEnderecos(String rua, String bairro, String cidade);
 }

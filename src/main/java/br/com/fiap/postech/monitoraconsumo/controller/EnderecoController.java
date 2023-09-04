@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -42,11 +43,11 @@ public class EnderecoController {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<EnderecoForm> findEndereco(@RequestParam(name = "rua") String rua,
-                                                     @RequestParam(name = "bairro") String bairro,
-                                                     @RequestParam(name = "cidade") String cidade) {
+    public ResponseEntity<List<EnderecoForm>> findEndereco(@RequestParam(name = "rua",required=false) String rua,
+                                                           @RequestParam(name = "bairro",required=false) String bairro,
+                                                           @RequestParam(name = "cidade",required=false) String cidade) {
 
-        return enderecoService.getEndereco(rua, bairro, cidade);
+        return enderecoService.getEnderecos(rua, bairro, cidade);
     }
 
     @PostMapping

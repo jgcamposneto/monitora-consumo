@@ -8,10 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 public interface IPessoaRepository extends JpaRepository<Pessoa, UUID> {
@@ -20,5 +17,5 @@ public interface IPessoaRepository extends JpaRepository<Pessoa, UUID> {
         FROM Pessoa p
         WHERE p.nome = :nome OR p.parentesco = :parentesco OR p.sexo = :sexo
         """)
-    Pessoa getPessoa(String nome, Parentesco parentesco, Sexo sexo);
+    List<Pessoa> getPessoas(String nome, Parentesco parentesco, Sexo sexo);
 }

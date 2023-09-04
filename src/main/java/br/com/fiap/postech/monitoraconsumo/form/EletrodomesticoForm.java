@@ -40,4 +40,12 @@ public class EletrodomesticoForm  {
                     .setUsuario(new Usuario().setId(idUsuario));
     }
 
+    public EletrodomesticoForm(Eletrodomestico eletrodomestico) {
+        this.setId(eletrodomestico.getId());
+        this.setNome(eletrodomestico.getNome());
+        this.setModelo(eletrodomestico.getModelo());
+        this.setPotencia(eletrodomestico.getPotencia());
+        this.setIdUsuario(eletrodomestico.getUsuario().getId());
+    }
+
 }

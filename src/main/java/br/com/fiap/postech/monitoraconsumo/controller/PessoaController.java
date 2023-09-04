@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -44,11 +45,11 @@ public class PessoaController {
     }
 
     @GetMapping("/buscar")
-    public ResponseEntity<PessoaForm> findPessoa(@RequestParam(name = "nome") String nome,
-                                                 @RequestParam(name = "parentesco") Parentesco parentesco,
-                                                 @RequestParam(name = "sexo") Sexo sexo) {
+    public ResponseEntity<List<PessoaForm>> findPessoas(@RequestParam(name = "nome",required=false) String nome,
+                                                      @RequestParam(name = "parentesco",required=false) Parentesco parentesco,
+                                                      @RequestParam(name = "sexo",required=false) Sexo sexo) {
 
-        return pessoaService.getPessoa(nome, parentesco, sexo);
+        return pessoaService.getPessoas(nome, parentesco, sexo);
     }
 
     @PostMapping

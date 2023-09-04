@@ -15,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class PessoaService {
@@ -65,12 +67,11 @@ public class PessoaService {
 
     }
 
-    public ResponseEntity<PessoaForm> getPessoa(String nome, Parentesco parentesco, Sexo sexo) {
-        Pessoa findPessoa = repository.getPessoa(nome, parentesco, sexo);
-        if (findPessoa == null) throw new ControllerNotFoundException("Pessoa não encontrada");
-
-        PessoaForm pessoaForm = new PessoaForm(findPessoa);
-        return ResponseEntity.ok(pessoaForm);
+    public ResponseEntity<List<PessoaForm>> getPessoas(String nome, Parentesco parentesco, Sexo sexo) {
+        List<Pessoa> findPessoas = repository.getPessoas(nome, parentesco, sexo);
+        if (findPessoas == null) throw new ControllerNotFoundException("Nenhuma pessoa encontrada");
+        List<PessoaForm> pessoasForm = findPessoas.stream().map(PessoaForm::new).collect(Collectors.toList());
+        return ResponseEntity.ok(pessoasForm);
     }
 
     public void adicionarRelacionamento(UUID idPessoa, UUID idPessoaRelacionada, Parentesco parentesco) {

@@ -72,4 +72,27 @@ public class PessoaService {
         PessoaForm pessoaForm = new PessoaForm(findPessoa);
         return ResponseEntity.ok(pessoaForm);
     }
+
+    public void adicionarRelacionamento(UUID idPessoa, UUID idPessoaRelacionada, Parentesco parentesco) {
+        Pessoa pessoa = findById(idPessoa);
+        Pessoa pessoaRelacionada = findById(idPessoaRelacionada);
+
+        pessoa.adicionarRelacionamento(pessoaRelacionada, parentesco);
+        repository.save(pessoa);
+        repository.save(pessoaRelacionada);
+    }
+
+    public boolean verificaParentesco(UUID id, Parentesco parentesco) {
+        Pessoa pessoa = findById(id);
+
+        if (pessoa != null) {
+            for (Pessoa relacionado : pessoa.getRelacionamentos()) {
+                if (relacionado.getParentesco() == parentesco) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

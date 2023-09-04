@@ -30,6 +30,9 @@ public class Usuario {
     @JsonManagedReference
     private List<Pessoa> pessoas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Eletrodomestico> eletrodomesticos = new ArrayList<>();
+
     public Usuario setId(UUID id) {
         this.id = id;
         return this;

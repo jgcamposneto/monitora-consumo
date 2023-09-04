@@ -74,7 +74,7 @@ public class EnderecoController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("{id}/adicionarPessoa/{idPessoa}")
+    @PostMapping("{idEndereco}/adicionarPessoa/{idPessoa}")
     public ResponseEntity adicionarPessoaAoEndereco(@PathVariable UUID idEndereco,
                                                     @PathVariable UUID idPessoa) {
         Endereco endereco = enderecoService.adicionarPessoa(idEndereco, idPessoa);

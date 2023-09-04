@@ -1,7 +1,6 @@
 package br.com.fiap.postech.monitoraconsumo.controller;
 
 import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
-import br.com.fiap.postech.monitoraconsumo.dominio.Pessoa;
 import br.com.fiap.postech.monitoraconsumo.form.EnderecoForm;
 import br.com.fiap.postech.monitoraconsumo.service.EnderecoService;
 import br.com.fiap.postech.monitoraconsumo.service.UsuarioService;

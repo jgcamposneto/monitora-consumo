@@ -5,6 +5,7 @@ import br.com.fiap.postech.monitoraconsumo.dominio.Pessoa;
 import br.com.fiap.postech.monitoraconsumo.repository.IEnderecoRepository;
 import br.com.fiap.postech.monitoraconsumo.service.exception.ControllerNotFoundException;
 import br.com.fiap.postech.monitoraconsumo.service.exception.DatabaseException;
+import br.com.fiap.postech.monitoraconsumo.service.exception.ServiceException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -68,6 +69,8 @@ public class EnderecoService {
     public Endereco adicionarPessoa(UUID idEndereco, UUID idPessoa) {
         Pessoa pessoa = pessoaService.findById(idPessoa);
         Endereco endereco = findById(idEndereco);
+        if(endereco.getPessoas().contains(pessoa))
+            throw new ServiceException("Pessoa já cadastrada para o endereço!");
         endereco.addPessoa(pessoa);
         pessoaService.save(pessoa);
         return endereco;

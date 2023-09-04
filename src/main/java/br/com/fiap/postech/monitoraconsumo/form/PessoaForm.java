@@ -39,6 +39,8 @@ public class PessoaForm {
         this.setParentesco(pessoa.getParentesco());
     }
 
+    public PessoaForm () {}
+
     public Pessoa toPessoa() {
         return new Pessoa().setNome(nome).setDataDeNascimento(dataDeNascimento).setSexo(sexo).setParentesco(parentesco);
     }

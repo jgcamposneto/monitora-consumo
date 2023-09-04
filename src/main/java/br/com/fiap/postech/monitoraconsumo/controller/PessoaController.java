@@ -1,6 +1,8 @@
 package br.com.fiap.postech.monitoraconsumo.controller;
 
+import br.com.fiap.postech.monitoraconsumo.dominio.Parentesco;
 import br.com.fiap.postech.monitoraconsumo.dominio.Pessoa;
+import br.com.fiap.postech.monitoraconsumo.dominio.Sexo;
 import br.com.fiap.postech.monitoraconsumo.form.PessoaForm;
 import br.com.fiap.postech.monitoraconsumo.service.PessoaService;
 import jakarta.validation.ConstraintViolation;
@@ -38,10 +40,18 @@ public class PessoaController {
         return ResponseEntity.ok(pessoa);
     }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<PessoaForm> findPessoa(@RequestParam(name = "nome") String nome,
+                                                 @RequestParam(name = "parentesco") Parentesco parentesco,
+                                                 @RequestParam(name = "sexo") Sexo sexo) {
+
+        return pessoaService.getPessoa(nome, parentesco, sexo);
+    }
+
     @PostMapping
     public ResponseEntity save(@RequestBody PessoaForm pessoaForm) {
         var violacoesToMap = validar(pessoaForm);
-        if(!violacoesToMap.isEmpty())
+        if (!violacoesToMap.isEmpty())
             return ResponseEntity.badRequest().body(violacoesToMap);
         var pessoa = pessoaForm.toPessoa();
         var pessoaSaved = pessoaService.save(pessoa);
@@ -54,9 +64,9 @@ public class PessoaController {
     @PutMapping("{id}")
     public ResponseEntity update(@PathVariable UUID id, @RequestBody PessoaForm pessoaForm) {
         var violacoesToMap = validar(pessoaForm);
-        if(!violacoesToMap.isEmpty())
+        if (!violacoesToMap.isEmpty())
             return ResponseEntity.badRequest().body(violacoesToMap);
-        var pessoa =  pessoaForm.toPessoa();
+        var pessoa = pessoaForm.toPessoa();
         var pessoaAdicionada = pessoaService.update(id, pessoa);
         pessoaForm.setId(pessoaAdicionada.getId());
         return ResponseEntity.ok(pessoaForm);

@@ -2,6 +2,8 @@ package br.com.fiap.postech.monitoraconsumo.service;
 
 import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
 import br.com.fiap.postech.monitoraconsumo.dominio.Pessoa;
+import br.com.fiap.postech.monitoraconsumo.form.EnderecoForm;
+import br.com.fiap.postech.monitoraconsumo.form.PessoaForm;
 import br.com.fiap.postech.monitoraconsumo.repository.IEnderecoRepository;
 import br.com.fiap.postech.monitoraconsumo.service.exception.ControllerNotFoundException;
 import br.com.fiap.postech.monitoraconsumo.service.exception.DatabaseException;
@@ -10,6 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -52,7 +55,7 @@ public class EnderecoService {
 
             return findEndereco;
         } catch (EntityNotFoundException e) {
-            throw  new ControllerNotFoundException("Endereço não encontrado, id:" + id);
+            throw new ControllerNotFoundException("Endereço não encontrado, id:" + id);
         }
     }
 
@@ -74,5 +77,13 @@ public class EnderecoService {
         endereco.addPessoa(pessoa);
         pessoaService.save(pessoa);
         return endereco;
+    }
+
+    public ResponseEntity<EnderecoForm> getEndereco(String rua, String bairro, String cidade) {
+        Endereco findEndereco = enderecoRepository.getEndereco(rua, bairro, cidade);
+        if (findEndereco == null) throw new ControllerNotFoundException("Endereco não encontrado");
+
+        EnderecoForm enderecoForm = new EnderecoForm(findEndereco);
+        return ResponseEntity.ok(enderecoForm);
     }
 }

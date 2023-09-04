@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -23,6 +24,11 @@ public class Pessoa {
     private LocalDate dataDeNascimento;
     private Sexo sexo;
     private Parentesco parentesco;
+    @ManyToMany
+    @JoinTable(name = "tb_relacionamentos",
+            joinColumns = @JoinColumn(name = "pessoa_id"),
+            inverseJoinColumns = @JoinColumn(name = "pessoa_relacionada_id"))
+    private List<Pessoa> relacionamentos;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference
@@ -68,4 +74,38 @@ public class Pessoa {
         this.usuario = usuario;
         return this;
     }
+    public Pessoa setRelacionamentos(List<Pessoa> relacionamentos) {
+        this.relacionamentos = relacionamentos;
+        return this;
+    }
+
+    public void adicionarRelacionamento(Pessoa pessoaRelacionada, Parentesco parentesco) {
+        switch(parentesco) {
+            case PAI:
+                this.relacionamentos.add(pessoaRelacionada);
+                pessoaRelacionada.setParentesco(Parentesco.FILHO);
+                pessoaRelacionada.getRelacionamentos().add(this);
+                break;
+            case MAE:
+                this.relacionamentos.add(pessoaRelacionada);
+                pessoaRelacionada.setParentesco(Parentesco.FILHO);
+                pessoaRelacionada.getRelacionamentos().add(this);
+                break;
+            case IRMAO:
+                this.relacionamentos.add(pessoaRelacionada);
+                pessoaRelacionada.getRelacionamentos().add(this);
+                break;
+            case FILHO:
+                if(pessoaRelacionada.getSexo() == Sexo.MASCULINO) {
+                    pessoaRelacionada.setParentesco(Parentesco.PAI);
+                } else {
+                    pessoaRelacionada.setParentesco(Parentesco.MAE);
+                }
+                pessoaRelacionada.getRelacionamentos().add(this);
+                break;
+            default:
+                throw new IllegalArgumentException("Parentesco não reconhecido");
+        }
+    }
+
 }

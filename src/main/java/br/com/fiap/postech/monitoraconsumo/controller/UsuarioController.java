@@ -28,6 +28,8 @@ public class UsuarioController {
     @Autowired
     private Validator validator;
 
+
+
     @GetMapping
     public ResponseEntity<Collection<Usuario>> findAll() {
         var usuarios = usuarioService.findAll();
@@ -52,6 +54,7 @@ public class UsuarioController {
                 ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand((usuarioSaved.getId())).toUri();
         return ResponseEntity.created(uri).body(usuarioForm);
     }
+
 
     @PutMapping("{id}")
     public ResponseEntity update(@PathVariable UUID id, @RequestBody UsuarioForm usuarioForm) {

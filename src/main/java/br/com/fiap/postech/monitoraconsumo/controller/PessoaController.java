@@ -76,6 +76,15 @@ public class PessoaController {
         pessoaForm.setId(pessoaAdicionada.getId());
         return ResponseEntity.ok(pessoaForm);
     }
+    @GetMapping("/{id}/verificaParentesco")
+    public ResponseEntity<String> verificaParentesco(@PathVariable UUID id, @RequestParam Parentesco parentesco) {
+        boolean possuiParentesco = pessoaService.verificaParentesco(id, parentesco);
+        if (possuiParentesco) {
+            return ResponseEntity.ok("A pessoa possui o parentesco: " + parentesco);
+        } else {
+            return ResponseEntity.ok("A pessoa não possui o parentesco: " + parentesco);
+        }
+    }
 
     @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable UUID id) {

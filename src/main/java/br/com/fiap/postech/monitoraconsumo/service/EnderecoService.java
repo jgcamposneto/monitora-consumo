@@ -1,5 +1,6 @@
 package br.com.fiap.postech.monitoraconsumo.service;
 
+import br.com.fiap.postech.monitoraconsumo.dominio.Eletrodomestico;
 import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
 import br.com.fiap.postech.monitoraconsumo.dominio.Pessoa;
 import br.com.fiap.postech.monitoraconsumo.form.EnderecoForm;
@@ -26,6 +27,9 @@ public class EnderecoService {
 
     @Autowired
     private PessoaService pessoaService;
+
+    @Autowired
+    private EletrodomesticoService eletrodomesticoService;
 
     public Collection<Endereco> findAll() {
         var enderecos = enderecoRepository.findAll();
@@ -76,6 +80,16 @@ public class EnderecoService {
             throw new ServiceException("Pessoa já cadastrada para o endereço!");
         endereco.addPessoa(pessoa);
         pessoaService.save(pessoa);
+        return endereco;
+    }
+
+    public Endereco adicionarEletrodomestico(UUID idEndereco, UUID idEletrodomestico) {
+        Eletrodomestico eletrodomestico = eletrodomesticoService.findById(idEletrodomestico);
+        Endereco endereco = findById(idEndereco);
+        if(endereco.getPessoas().contains(eletrodomestico))
+            throw new ServiceException("Eletroméstico já cadastrado para o endereço!");
+        endereco.addEletrodomestico(eletrodomestico);
+        eletrodomesticoService.save(eletrodomestico);
         return endereco;
     }
 

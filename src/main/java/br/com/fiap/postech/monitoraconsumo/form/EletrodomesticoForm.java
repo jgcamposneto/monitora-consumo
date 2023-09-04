@@ -27,12 +27,17 @@ public class EletrodomesticoForm  {
     @Positive(message = "Potência não pode ser negativa ou zero.")
     private BigDecimal potencia;
 
+    @JsonProperty
+    @NotNull(message = "Id do usuário é um campo obrigatório e não pode estar em branco.")
+    private UUID idUsuario;
+
     public Eletrodomestico toEletrodomestico() {
         return new
                 Eletrodomestico()
                     .setNome(nome)
                     .setModelo(modelo)
-                    .setPotencia(potencia);
+                    .setPotencia(potencia)
+                    .setUsuario(new Usuario().setId(idUsuario));
     }
 
 }

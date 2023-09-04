@@ -88,6 +88,13 @@ public class EnderecoController {
         return ResponseEntity.ok(endereco);
     }
 
+    @PostMapping("{idEndereco}/adicionarEletrodomestico/{idEletrodomestico}")
+    public ResponseEntity adicionarEletrodomesticoAoEndereco(@PathVariable UUID idEndereco,
+                                                    @PathVariable UUID idEletrodomestico) {
+        Endereco endereco = enderecoService.adicionarEletrodomestico(idEndereco, idEletrodomestico);
+        return ResponseEntity.ok(endereco);
+    }
+
     private <T> Map<Path, String> validar(T form) {
         var violacoes = validator.validate(form);
         var violacoesToMap = violacoes.stream().collect(Collectors.toMap(ConstraintViolation::getPropertyPath, ConstraintViolation::getMessage));

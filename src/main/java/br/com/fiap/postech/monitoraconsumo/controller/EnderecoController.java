@@ -42,10 +42,18 @@ public class EnderecoController {
         return ResponseEntity.ok(endereco);
     }
 
+    @GetMapping("/buscar")
+    public ResponseEntity<EnderecoForm> findEndereco(@RequestParam(name = "rua") String rua,
+                                                     @RequestParam(name = "bairro") String bairro,
+                                                     @RequestParam(name = "cidade") String cidade) {
+
+        return enderecoService.getEndereco(rua, bairro, cidade);
+    }
+
     @PostMapping
     public ResponseEntity save(@RequestBody EnderecoForm enderecoForm) {
         var violacoesToMap = validar(enderecoForm);
-        if(!violacoesToMap.isEmpty())
+        if (!violacoesToMap.isEmpty())
             return ResponseEntity.badRequest().body(violacoesToMap);
         var endereco = enderecoForm.toEndereco();
         var usuario = usuarioService.findById(endereco.getUsuario().getId());
@@ -60,9 +68,9 @@ public class EnderecoController {
     @PutMapping("{id}")
     public ResponseEntity update(@PathVariable UUID id, @RequestBody EnderecoForm enderecoForm) {
         var violacoesToMap = validar(enderecoForm);
-        if(!violacoesToMap.isEmpty())
+        if (!violacoesToMap.isEmpty())
             return ResponseEntity.badRequest().body(violacoesToMap);
-        var endereco =  enderecoForm.toEndereco();
+        var endereco = enderecoForm.toEndereco();
         var enderecoUpdated = enderecoService.update(id, endereco);
         enderecoForm.setId(enderecoUpdated.getId());
         return ResponseEntity.ok(enderecoForm);
@@ -80,6 +88,7 @@ public class EnderecoController {
         Endereco endereco = enderecoService.adicionarPessoa(idEndereco, idPessoa);
         return ResponseEntity.ok(endereco);
     }
+
     private <T> Map<Path, String> validar(T form) {
         var violacoes = validator.validate(form);
         var violacoesToMap = violacoes.stream().collect(Collectors.toMap(ConstraintViolation::getPropertyPath, ConstraintViolation::getMessage));

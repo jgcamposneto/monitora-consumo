@@ -31,6 +31,14 @@ public class PessoaForm {
     @NotNull(message = "Parentesco é um campo obrigatório e não pode estar em branco.")
     private Parentesco parentesco;
 
+    public PessoaForm(Pessoa pessoa) {
+        this.setId(pessoa.getId());
+        this.setNome(pessoa.getNome());
+        this.setDataDeNascimento(pessoa.getDataDeNascimento());
+        this.setSexo(pessoa.getSexo());
+        this.setParentesco(pessoa.getParentesco());
+    }
+
     public Pessoa toPessoa() {
         return new Pessoa().setNome(nome).setDataDeNascimento(dataDeNascimento).setSexo(sexo).setParentesco(parentesco);
     }

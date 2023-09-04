@@ -1,6 +1,9 @@
 package br.com.fiap.postech.monitoraconsumo.service;
 
+import br.com.fiap.postech.monitoraconsumo.dominio.Parentesco;
 import br.com.fiap.postech.monitoraconsumo.dominio.Pessoa;
+import br.com.fiap.postech.monitoraconsumo.dominio.Sexo;
+import br.com.fiap.postech.monitoraconsumo.form.PessoaForm;
 import br.com.fiap.postech.monitoraconsumo.repository.IPessoaRepository;
 import br.com.fiap.postech.monitoraconsumo.service.exception.ControllerNotFoundException;
 import br.com.fiap.postech.monitoraconsumo.service.exception.DatabaseException;
@@ -8,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -46,7 +50,7 @@ public class PessoaService {
 
             return findPessoa;
         } catch (EntityNotFoundException e) {
-            throw  new ControllerNotFoundException("Pessoa não encontrado, id:" + id);
+            throw new ControllerNotFoundException("Pessoa não encontrado, id:" + id);
         }
     }
 
@@ -61,4 +65,11 @@ public class PessoaService {
 
     }
 
+    public ResponseEntity<PessoaForm> getPessoa(String nome, Parentesco parentesco, Sexo sexo) {
+        Pessoa findPessoa = repository.getPessoa(nome, parentesco, sexo);
+        if (findPessoa == null) throw new ControllerNotFoundException("Pessoa não encontrada");
+
+        PessoaForm pessoaForm = new PessoaForm(findPessoa);
+        return ResponseEntity.ok(pessoaForm);
+    }
 }

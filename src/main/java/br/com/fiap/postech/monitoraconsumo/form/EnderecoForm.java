@@ -34,6 +34,16 @@ public class EnderecoForm {
     @NotNull(message = "Id do usuário é um campo obrigatório e não pode estar em branco.")
     private UUID idUsuario;
 
+    public EnderecoForm(Endereco endereco) {
+        this.id = endereco.getId();
+        this.rua = endereco.getRua();
+        this.numero = endereco.getNumero();
+        this.bairro = endereco.getBairro();
+        this.cidade = endereco.getCidade();
+        this.estado = endereco.getEstado();
+        this.setIdUsuario(endereco.getUsuario().getId());
+    }
+
     public Endereco toEndereco() {
         return new Endereco()
                     .setRua(rua)

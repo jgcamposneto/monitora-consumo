@@ -1,7 +1,6 @@
 package br.com.fiap.postech.monitoraconsumo.controller;
 
 import br.com.fiap.postech.monitoraconsumo.dominio.Eletrodomestico;
-import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
 import br.com.fiap.postech.monitoraconsumo.form.EletrodomesticoForm;
 import br.com.fiap.postech.monitoraconsumo.service.EletrodomesticoService;
 import jakarta.validation.ConstraintViolation;

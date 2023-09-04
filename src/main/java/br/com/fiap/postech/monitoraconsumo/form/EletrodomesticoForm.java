@@ -1,6 +1,7 @@
 package br.com.fiap.postech.monitoraconsumo.form;
 
 import br.com.fiap.postech.monitoraconsumo.dominio.Eletrodomestico;
+import br.com.fiap.postech.monitoraconsumo.dominio.Usuario;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +28,11 @@ public class EletrodomesticoForm  {
     private BigDecimal potencia;
 
     public Eletrodomestico toEletrodomestico() {
-        return new Eletrodomestico().setNome(nome).setModelo(modelo).setPotencia(potencia);
+        return new
+                Eletrodomestico()
+                    .setNome(nome)
+                    .setModelo(modelo)
+                    .setPotencia(potencia);
     }
 
 }

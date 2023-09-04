@@ -1,8 +1,10 @@
 package br.com.fiap.postech.monitoraconsumo.controller;
 
 import br.com.fiap.postech.monitoraconsumo.dominio.Endereco;
+import br.com.fiap.postech.monitoraconsumo.dominio.Pessoa;
 import br.com.fiap.postech.monitoraconsumo.form.EnderecoForm;
 import br.com.fiap.postech.monitoraconsumo.service.EnderecoService;
+import br.com.fiap.postech.monitoraconsumo.service.UsuarioService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Path;
 import jakarta.validation.Validator;
@@ -22,6 +24,8 @@ public class EnderecoController {
 
     @Autowired
     private EnderecoService enderecoService;
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Autowired
     private Validator validator;
@@ -44,6 +48,8 @@ public class EnderecoController {
         if(!violacoesToMap.isEmpty())
             return ResponseEntity.badRequest().body(violacoesToMap);
         var endereco = enderecoForm.toEndereco();
+        var usuario = usuarioService.findById(endereco.getUsuario().getId());
+        endereco.setUsuario(usuario);
         var enderecoSaved = enderecoService.save(endereco);
         enderecoForm.setId(enderecoSaved.getId());
         var uri =
@@ -68,6 +74,12 @@ public class EnderecoController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("{id}/adicionarPessoa/{idPessoa}")
+    public ResponseEntity adicionarPessoaAoEndereco(@PathVariable UUID idEndereco,
+                                                    @PathVariable UUID idPessoa) {
+        Endereco endereco = enderecoService.adicionarPessoa(idEndereco, idPessoa);
+        return ResponseEntity.ok(endereco);
+    }
     private <T> Map<Path, String> validar(T form) {
         var violacoes = validator.validate(form);
         var violacoesToMap = violacoes.stream().collect(Collectors.toMap(ConstraintViolation::getPropertyPath, ConstraintViolation::getMessage));

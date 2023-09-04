@@ -1,10 +1,14 @@
 package br.com.fiap.postech.monitoraconsumo.dominio;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -22,6 +26,15 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String estado;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JoinColumn(name = "usuario.id")
+    private Usuario usuario;
+
+    @OneToMany(mappedBy = "endereco", fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<Pessoa> pessoas = new ArrayList<>();
 
     public Endereco setId(UUID id) {
         this.id = id;
@@ -52,4 +65,15 @@ public class Endereco {
         this.estado = estado;
         return this;
     }
+
+    public Endereco setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        return this;
+    }
+
+    public void addPessoa(Pessoa pessoa) {
+        this.getPessoas().add(pessoa);
+        pessoa.setEndereco(this);
+   }
+
 }

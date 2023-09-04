@@ -1,5 +1,6 @@
 package br.com.fiap.postech.monitoraconsumo.dominio;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,6 +24,11 @@ public class Pessoa {
     private Sexo sexo;
     private Parentesco parentesco;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JoinColumn(name = "endereco.id")
+    private Endereco endereco;
+
     public Pessoa setId(UUID id) {
         this.id = id;
         return this;
@@ -45,6 +51,11 @@ public class Pessoa {
 
     public Pessoa setParentesco(Parentesco parentesco) {
         this.parentesco = parentesco;
+        return this;
+    }
+
+    public Pessoa setEndereco(Endereco endereco) {
+        this.endereco = endereco;
         return this;
     }
 }

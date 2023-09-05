@@ -31,6 +31,8 @@ public class EletrodomesticoForm  {
     @NotNull(message = "Id do usuário é um campo obrigatório e não pode estar em branco.")
     private UUID idUsuario;
 
+    public EletrodomesticoForm() {}
+
     public Eletrodomestico toEletrodomestico() {
         return new
                 Eletrodomestico()
